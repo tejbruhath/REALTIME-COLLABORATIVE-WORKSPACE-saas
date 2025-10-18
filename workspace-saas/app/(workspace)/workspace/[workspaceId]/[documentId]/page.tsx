@@ -7,8 +7,9 @@ import { RoomProvider } from "@/liveblocks.config";
 import Sidebar from "@/components/Sidebar";
 import Editor from "@/components/Editor";
 import Toolbar from "@/components/Toolbar";
+import ShareModal from "@/components/ShareModal";
 import toast from "react-hot-toast";
-import { Save, Check } from "lucide-react";
+import { Save, Check, Share2 } from "lucide-react";
 
 export default function DocumentPage() {
   const router = useRouter();
@@ -21,6 +22,7 @@ export default function DocumentPage() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [showShareModal, setShowShareModal] = useState(false);
 
   const workspaceId = params.workspaceId as string;
   const documentId = params.documentId as string;
@@ -149,18 +151,27 @@ export default function DocumentPage() {
             className="text-2xl font-bold text-white bg-transparent border-none outline-none focus:outline-none"
             placeholder="Untitled Document"
           />
-          <div className="flex items-center gap-2 text-sm text-[#A3A3A3]">
-            {saved ? (
-              <>
-                <Check size={16} className="text-green-500" />
-                <span>Saved</span>
-              </>
-            ) : (
-              <>
-                <Save size={16} />
-                <span>Saving...</span>
-              </>
-            )}
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setShowShareModal(true)}
+              className="flex items-center gap-2 px-4 py-2 bg-[#3B82F6] text-white hover:bg-[#2563EB] transition-colors"
+            >
+              <Share2 size={16} />
+              <span>Share</span>
+            </button>
+            <div className="flex items-center gap-2 text-sm text-[#A3A3A3]">
+              {saved ? (
+                <>
+                  <Check size={16} className="text-green-500" />
+                  <span>Saved</span>
+                </>
+              ) : (
+                <>
+                  <Save size={16} />
+                  <span>Saving...</span>
+                </>
+              )}
+            </div>
           </div>
         </div>
 
@@ -181,6 +192,14 @@ export default function DocumentPage() {
           </Suspense>
         </RoomProvider>
       </div>
+
+      {/* Share Modal */}
+      {showShareModal && (
+        <ShareModal
+          workspaceId={workspaceId}
+          onClose={() => setShowShareModal(false)}
+        />
+      )}
     </div>
   );
 }
