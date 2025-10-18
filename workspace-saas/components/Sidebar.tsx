@@ -72,10 +72,13 @@ export default function Sidebar({
 
       {/* Footer */}
       <div className="border-t border-[#1F1F1F] p-4 space-y-2">
-        <button className="w-full flex items-center gap-3 px-3 py-2 text-sm text-[#A3A3A3] hover:bg-[#0A0A0A] hover:text-white transition-colors">
+        <Link
+          href="/dashboard"
+          className="w-full flex items-center gap-3 px-3 py-2 text-sm text-[#A3A3A3] hover:bg-[#0A0A0A] hover:text-white transition-colors"
+        >
           <Settings size={16} />
-          Settings
-        </button>
+          Dashboard
+        </Link>
         <button
           onClick={() => signOut()}
           className="w-full flex items-center gap-3 px-3 py-2 text-sm text-[#A3A3A3] hover:bg-[#0A0A0A] hover:text-white transition-colors"

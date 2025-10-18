@@ -2,12 +2,6 @@
 @import "@liveblocks/react-ui/styles.css";
 @import "@liveblocks/react-tiptap/styles.css";
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 :root {
   --background: #000000;
   --foreground: #ffffff;

@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { Plus, FileText } from "lucide-react";
+import { useSession, signOut } from "next-auth/react";
+import { Plus, FileText, LogOut } from "lucide-react";
 import toast from "react-hot-toast";
 import { formatDistanceToNow } from "date-fns";
 
@@ -47,47 +47,89 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-black">
-      <div className="max-w-7xl mx-auto px-8 py-12">
-        <div className="mb-12">
-          <h1 className="text-4xl font-bold text-white mb-2">Dashboard</h1>
-          <p className="text-[#A3A3A3]">Welcome back, {session?.user?.name}</p>
-        </div>
-
-        <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-white mb-6">Your Workspaces</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {workspaces.map((workspace) => (
-              <button
-                key={workspace._id}
-                onClick={() => handleWorkspaceClick(workspace._id)}
-                className="bg-[#0A0A0A] border border-[#1F1F1F] p-6 text-left hover:border-[#3B82F6] transition-colors group"
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <FileText className="text-[#3B82F6]" size={24} />
-                  <span className="text-xs text-[#737373]">
-                    {workspace.members?.length || 0} members
-                  </span>
-                </div>
-                <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-[#3B82F6] transition-colors">
-                  {workspace.name}
-                </h3>
-                <p className="text-sm text-[#A3A3A3]">
-                  Created {formatDistanceToNow(new Date(workspace.createdAt))} ago
-                </p>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {workspaces.length === 0 && (
-          <div className="text-center py-12">
-            <FileText className="mx-auto text-[#3B82F6] mb-4" size={48} />
-            <h3 className="text-xl font-semibold text-white mb-2">No workspaces yet</h3>
-            <p className="text-[#A3A3A3] mb-6">
-              A default workspace was created for you. Refresh the page if you don't see it.
+      <div className="max-w-7xl mx-auto px-8 py-16">
+        {/* Header Section */}
+        <div className="mb-16 flex items-start justify-between">
+          <div>
+            <h1 className="text-5xl font-bold text-white mb-3">Dashboard</h1>
+            <p className="text-lg text-[#A3A3A3]">
+              Welcome back, <span className="text-white font-medium">{session?.user?.name}</span>
+            </p>
+            <p className="text-sm text-[#737373] mt-2">
+              Manage your workspaces and collaborate with your team in real-time
             </p>
           </div>
-        )}
+          <button
+            onClick={() => signOut()}
+            className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
+          >
+            <LogOut size={18} />
+            Sign Out
+          </button>
+        </div>
+
+        {/* Workspaces Section */}
+        <div className="mb-12">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h2 className="text-2xl font-bold text-white mb-1">Your Workspaces</h2>
+              <p className="text-sm text-[#737373]">
+                Click on a workspace to view and manage documents
+              </p>
+            </div>
+            <div className="text-sm text-[#A3A3A3]">
+              {workspaces.length} {workspaces.length === 1 ? 'workspace' : 'workspaces'}
+            </div>
+          </div>
+
+          {workspaces.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {workspaces.map((workspace) => (
+                <button
+                  key={workspace._id}
+                  onClick={() => handleWorkspaceClick(workspace._id)}
+                  className="bg-[#0A0A0A] p-8 text-left hover:bg-[#1F1F1F] transition-all duration-200 group"
+                >
+                  <div className="flex items-start justify-between mb-6">
+                    <div className="p-3 bg-black">
+                      <FileText className="text-[#3B82F6]" size={28} strokeWidth={2} />
+                    </div>
+                    <div className="text-right">
+                      <div className="text-xs text-[#737373] uppercase tracking-wider mb-1">
+                        Members
+                      </div>
+                      <div className="text-lg font-bold text-white">
+                        {workspace.members?.length || 0}
+                      </div>
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-[#3B82F6] transition-colors">
+                    {workspace.name}
+                  </h3>
+                  <div className="flex items-center gap-2 text-sm text-[#A3A3A3]">
+                    <div className="w-1 h-1 bg-[#3B82F6]"></div>
+                    <span>Created {formatDistanceToNow(new Date(workspace.createdAt))} ago</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          ) : (
+            <div className="bg-[#0A0A0A] p-16 text-center">
+              <div className="max-w-md mx-auto">
+                <div className="p-4 bg-black inline-block mb-6">
+                  <FileText className="text-[#3B82F6]" size={48} strokeWidth={2} />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-3">No workspaces yet</h3>
+                <p className="text-[#A3A3A3] mb-2">
+                  A default workspace should have been created for you automatically.
+                </p>
+                <p className="text-sm text-[#737373]">
+                  Try refreshing the page or contact support if the issue persists.
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
