@@ -1,0 +1,228 @@
+@import "tailwindcss";
+@import "@liveblocks/react-ui/styles.css";
+@import "@liveblocks/react-tiptap/styles.css";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+  --primary: #3B82F6;
+  --secondary: #1F1F1F;
+  --border: #1F1F1F;
+  --text-secondary: #A3A3A3;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1F1F1F;
+  border: none;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2A2A2A;
+}
+
+/* Selection */
+::selection {
+  background: #3B82F6;
+  color: #ffffff;
+}
+
+/* Liveblocks Overrides - Minimalistic Black Theme */
+.lb-root {
+  --lb-accent: #3B82F6;
+  --lb-background: #000000;
+  --lb-foreground: #ffffff;
+  --lb-border: #1F1F1F;
+}
+
+.lb-composer,
+.lb-thread,
+.lb-comment {
+  background: #0A0A0A !important;
+  border: 1px solid #1F1F1F !important;
+  border-radius: 0 !important;
+}
+
+.lb-button {
+  border-radius: 0 !important;
+}
+
+/* Tiptap Editor Styling */
+.tiptap {
+  outline: none;
+  color: #ffffff;
+}
+
+.tiptap h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 2rem 0 1rem;
+  color: #ffffff;
+}
+
+.tiptap h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.75rem;
+  color: #ffffff;
+}
+
+.tiptap h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 1.25rem 0 0.5rem;
+  color: #ffffff;
+}
+
+.tiptap p {
+  margin: 0.75rem 0;
+  color: #E5E5E5;
+}
+
+.tiptap ul,
+.tiptap ol {
+  padding-left: 1.5rem;
+  margin: 0.75rem 0;
+}
+
+.tiptap li {
+  margin: 0.25rem 0;
+  color: #E5E5E5;
+}
+
+.tiptap code {
+  background: #1F1F1F;
+  color: #3B82F6;
+  padding: 0.2rem 0.4rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9em;
+}
+
+.tiptap pre {
+  background: #0A0A0A;
+  color: #E5E5E5;
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+  border: 1px solid #1F1F1F;
+}
+
+.tiptap pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+
+.tiptap blockquote {
+  border-left: 3px solid #3B82F6;
+  padding-left: 1rem;
+  margin: 1rem 0;
+  font-style: italic;
+  color: #A3A3A3;
+}
+
+.tiptap hr {
+  border: none;
+  border-top: 1px solid #1F1F1F;
+  margin: 2rem 0;
+}
+
+.tiptap a {
+  color: #3B82F6;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.tiptap a:hover {
+  border-bottom-color: #3B82F6;
+}
+
+.tiptap table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.tiptap th,
+.tiptap td {
+  border: 1px solid #1F1F1F;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.tiptap th {
+  background: #0A0A0A;
+  font-weight: 600;
+}
+
+.tiptap mark {
+  background: #3B82F620;
+  color: #3B82F6;
+  padding: 0.1rem 0.2rem;
+}
+
+/* Task List */
+.tiptap ul[data-type="taskList"] {
+  list-style: none;
+  padding-left: 0;
+}
+
+.tiptap ul[data-type="taskList"] li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.tiptap ul[data-type="taskList"] li input[type="checkbox"] {
+  margin-top: 0.4rem;
+  accent-color: #3B82F6;
+}
+
+/* Collaboration Cursors */
+.collaboration-cursor__caret {
+  border-left: 2px solid;
+  border-right: 2px solid;
+  margin-left: -1px;
+  margin-right: -1px;
+  pointer-events: none;
+  position: relative;
+  word-break: normal;
+}
+
+.collaboration-cursor__label {
+  border-radius: 0;
+  color: #000;
+  font-size: 11px;
+  font-weight: 600;
+  left: -1px;
+  line-height: normal;
+  padding: 2px 6px;
+  position: absolute;
+  top: -1.4em;
+  user-select: none;
+  white-space: nowrap;
+}

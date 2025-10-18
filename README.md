@@ -1,56 +1,49 @@
-# Realtime Collaborative Text Editor
+# REALTIME-COLLABORATIVE-WORKSPACE-SAAS
 
-A realtime collaborative text editor built with React, Liveblocks, and Tiptap.
+## ⚠️ IMPORTANT: Project Location
 
-## Features
+**Your full-stack application is in the `workspace-saas` folder!**
 
-- 🚀 Real-time collaboration
-- ✍️ Rich text editing with Tiptap
-- 💬 Collaborative comments and threads
-- 🎨 Modern UI with floating toolbar
-- 📱 Responsive design (desktop and mobile)
-
-## Getting Started
-
-### Install Dependencies
-
-```bash
-npm install
 ```
-
-### Run Development Server
-
-```bash
+cd workspace-saas
 npm run dev
 ```
 
-### Build for Production
+The application runs at: http://localhost:3000
 
-```bash
-npm run build
+## Ignore These Folders
+
+- `node_modules/` - Leftover from demo (locked files, can't delete while processes running)
+- `.vite/` - Temporary build cache
+
+**Everything you need is in `workspace-saas/`**
+
+## Quick Start
+
+1. Make sure your `.env.local` in `workspace-saas/` has:
+   - ✅ MONGODB_URI
+   - ✅ NEXTAUTH_URL
+   - ✅ NEXTAUTH_SECRET (generated)
+   - ⏳ LIVEBLOCKS_SECRET_KEY (get from https://liveblocks.io/dashboard)
+
+2. Start the dev server:
+   ```bash
+   cd workspace-saas
+   npm run dev
+   ```
+
+3. Open http://localhost:3000
+
+## Project Structure
+
+```
+rcte/
+└── workspace-saas/          ← YOUR MAIN PROJECT
+    ├── app/                 ← Pages & API routes
+    ├── components/          ← React components
+    ├── lib/                 ← MongoDB & Liveblocks config
+    ├── .env.local          ← Your credentials
+    └── package.json        ← Dependencies
 ```
 
-## Tech Stack
-
-- **React** - UI framework
-- **TypeScript** - Type safety
-- **Vite** - Build tool
-- **Liveblocks** - Real-time collaboration infrastructure
-- **Tiptap** - Headless rich text editor
-
-## Notes
-
-- **Better SQLite3** was mentioned for database functionality but is not included in this initial demo. It requires C++ build tools (Visual Studio) to compile on Windows. You can add it later if needed for persistent storage features.
-
-## Usage
-
-1. Open the application in multiple browser windows/tabs
-2. Start typing in the editor
-3. See real-time updates across all windows
-4. Select text to add comments using the floating toolbar
-5. Collaborate with others in real-time!
-
-## Configuration
-
-The Liveblocks public API key is configured in `src/App.tsx`. For production use, consider implementing proper authentication.
-# REALTIME-COLLABORATIVE-WORKSPACE-saas
+That's it! Focus only on the `workspace-saas` folder.
