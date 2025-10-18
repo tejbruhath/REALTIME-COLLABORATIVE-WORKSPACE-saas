@@ -80,7 +80,7 @@ export default function WorkspacePage() {
         currentWorkspaceId={workspaceId}
         onCreateDocument={handleCreateDocument}
       />
-      <div className="flex-1 flex items-center justify-center p-8">
+      <div className="flex-1 flex items-center justify-center p-8 ml-64">
         <div className="text-center max-w-2xl">
           <div className="p-6 bg-[#0A0A0A] inline-block mb-8">
             <svg

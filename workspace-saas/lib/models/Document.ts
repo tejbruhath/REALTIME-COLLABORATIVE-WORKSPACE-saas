@@ -34,7 +34,6 @@ const DocumentSchema = new Schema<IDocument>(
     liveblocksRoomId: {
       type: String,
       required: true,
-      unique: true,
     },
     createdBy: {
       type: Schema.Types.ObjectId,
@@ -65,7 +64,7 @@ const DocumentSchema = new Schema<IDocument>(
 );
 
 DocumentSchema.index({ workspaceId: 1, isArchived: 1 });
-DocumentSchema.index({ liveblocksRoomId: 1 });
+DocumentSchema.index({ liveblocksRoomId: 1 }, { unique: true });
 
 const DocumentModel: Model<IDocument> =
   mongoose.models.Document || mongoose.model<IDocument>('Document', DocumentSchema);

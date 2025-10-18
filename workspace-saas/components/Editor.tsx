@@ -1,21 +1,19 @@
 "use client";
 
+import { useEffect } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Table from "@tiptap/extension-table";
 import TableRow from "@tiptap/extension-table-row";
 import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
-import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
-import Highlight from "@tiptap/extension-highlight";
-import TaskList from "@tiptap/extension-task-list";
-import TaskItem from "@tiptap/extension-task-item";
 import TextAlign from "@tiptap/extension-text-align";
 import Color from "@tiptap/extension-color";
 import TextStyle from "@tiptap/extension-text-style";
 import { useLiveblocksExtension, FloatingToolbar } from "@liveblocks/react-tiptap";
-import { Threads } from "./Threads";
+import { ResizableImage } from "@/lib/extensions/ResizableImage";
+import EditorToolbar from "./EditorToolbar";
 
 interface EditorProps {
   documentId: string;
@@ -40,16 +38,9 @@ export default function Editor({ documentId, initialContent, onUpdate }: EditorP
       TableRow,
       TableCell,
       TableHeader,
-      Image,
+      ResizableImage,
       Link.configure({
         openOnClick: false,
-      }),
-      Highlight.configure({
-        multicolor: true,
-      }),
-      TaskList,
-      TaskItem.configure({
-        nested: true,
       }),
       TextAlign.configure({
         types: ["heading", "paragraph"],
@@ -59,20 +50,33 @@ export default function Editor({ documentId, initialContent, onUpdate }: EditorP
     ],
     editorProps: {
       attributes: {
-        class: "tiptap min-h-screen p-12 focus:outline-none",
+        class: "tiptap min-h-screen p-12 focus:outline-none text-white",
       },
     },
     onUpdate: ({ editor }) => {
       if (onUpdate) {
-        onUpdate(editor.getJSON());
+        const content = editor.getJSON();
+        onUpdate(content);
       }
     },
   });
 
+  // Set initial content when editor is ready
+  useEffect(() => {
+    if (editor && initialContent && !editor.isDestroyed) {
+      // Only set content if editor is empty
+      if (editor.isEmpty) {
+        editor.commands.setContent(initialContent);
+      }
+    }
+  }, [editor, initialContent]);
+
   return (
-    <div className="relative flex-1 bg-black">
-      <EditorContent editor={editor} />
-      <Threads editor={editor} />
+    <div className="relative flex-1 bg-black flex flex-col">
+      <EditorToolbar editor={editor} />
+      <div className="flex-1 overflow-auto">
+        <EditorContent editor={editor} />
+      </div>
       <FloatingToolbar editor={editor} />
     </div>
   );

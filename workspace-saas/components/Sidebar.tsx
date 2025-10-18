@@ -21,7 +21,7 @@ export default function Sidebar({
   const pathname = usePathname();
 
   return (
-    <div className="w-64 h-screen bg-black border-r border-[#1F1F1F] flex flex-col">
+    <div className="w-64 h-screen bg-black dark:bg-black bg-white border-r border-gray-200 dark:border-[#1F1F1F] flex flex-col fixed left-0 top-0">
       {/* Header */}
       <div className="p-4 border-b border-[#1F1F1F]">
         <h1 className="text-xl font-bold text-white">Workspace</h1>

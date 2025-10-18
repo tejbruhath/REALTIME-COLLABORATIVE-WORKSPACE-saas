@@ -6,6 +6,7 @@ import { useSession, signOut } from "next-auth/react";
 import { Plus, FileText, LogOut } from "lucide-react";
 import toast from "react-hot-toast";
 import { formatDistanceToNow } from "date-fns";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -39,33 +40,36 @@ export default function DashboardPage() {
 
   if (status === "loading" || loading) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="text-white">Loading...</div>
+      <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center">
+        <div className="text-gray-900 dark:text-white">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-white dark:bg-black">
       <div className="max-w-7xl mx-auto px-8 py-16">
         {/* Header Section */}
         <div className="mb-16 flex items-start justify-between">
           <div>
-            <h1 className="text-5xl font-bold text-white mb-3">Dashboard</h1>
-            <p className="text-lg text-[#A3A3A3]">
-              Welcome back, <span className="text-white font-medium">{session?.user?.name}</span>
+            <h1 className="text-5xl font-bold text-gray-900 dark:text-white mb-3">Dashboard</h1>
+            <p className="text-lg text-gray-600 dark:text-gray-400">
+              Welcome back, <span className="text-gray-900 dark:text-white font-medium">{session?.user?.name}</span>
             </p>
-            <p className="text-sm text-[#737373] mt-2">
+            <p className="text-sm text-gray-500 dark:text-gray-500 mt-2">
               Manage your workspaces and collaborate with your team in real-time
             </p>
           </div>
-          <button
-            onClick={() => signOut()}
-            className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
-          >
-            <LogOut size={18} />
-            Sign Out
-          </button>
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <button
+              onClick={() => signOut()}
+              className="flex items-center gap-2 px-4 py-2 bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
+            >
+              <LogOut size={18} />
+              Sign Out
+            </button>
+          </div>
         </div>
 
         {/* Workspaces Section */}
