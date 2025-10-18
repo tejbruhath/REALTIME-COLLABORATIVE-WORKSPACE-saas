@@ -5,7 +5,7 @@ import DocumentModel from "@/lib/models/Document";
 import Workspace from "@/lib/models/Workspace";
 import { authOptions } from "../../auth/[...nextauth]/route";
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await getServerSession(authOptions);
 
@@ -13,9 +13,10 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
+    const { id } = await params;
     await connectDB();
 
-    const document = await DocumentModel.findById(params.id)
+    const document = await DocumentModel.findById(id)
       .populate("createdBy", "name email avatar")
       .populate("lastEditedBy", "name email avatar");
 
@@ -40,7 +41,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await getServerSession(authOptions);
 
@@ -48,11 +49,12 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
+    const { id } = await params;
     const { title, content } = await request.json();
 
     await connectDB();
 
-    const document = await DocumentModel.findById(params.id);
+    const document = await DocumentModel.findById(id);
 
     if (!document) {
       return NextResponse.json({ error: "Document not found" }, { status: 404 });
@@ -83,7 +85,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     const session = await getServerSession(authOptions);
 
@@ -91,9 +93,10 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
+    const { id } = await params;
     await connectDB();
 
-    const document = await DocumentModel.findById(params.id);
+    const document = await DocumentModel.findById(id);
 
     if (!document) {
       return NextResponse.json({ error: "Document not found" }, { status: 404 });

@@ -176,7 +176,10 @@ export default function DocumentPage() {
         </div>
 
         {/* Editor */}
-        <RoomProvider id={document.liveblocksRoomId}>
+        <RoomProvider 
+          id={document.liveblocksRoomId}
+          initialPresence={{ cursor: null }}
+        >
           <Suspense
             fallback={
               <div className="flex-1 flex items-center justify-center">

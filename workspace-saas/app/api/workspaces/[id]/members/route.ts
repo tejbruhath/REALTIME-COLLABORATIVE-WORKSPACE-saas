@@ -8,7 +8,7 @@ import User from "@/lib/models/User";
 // Add member to workspace
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -16,6 +16,7 @@ export async function POST(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const { id } = await params;
     const { email, role = "editor" } = await req.json();
 
     if (!email) {
@@ -31,7 +32,7 @@ export async function POST(
     }
 
     // Find workspace and check permissions
-    const workspace = await Workspace.findById(params.id);
+    const workspace = await Workspace.findById(id);
     if (!workspace) {
       return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
     }
@@ -90,7 +91,7 @@ export async function POST(
 // Get workspace members
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -98,9 +99,10 @@ export async function GET(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const { id } = await params;
     await connectDB();
 
-    const workspace = await Workspace.findById(params.id).populate(
+    const workspace = await Workspace.findById(id).populate(
       "members.userId",
       "name email avatar color"
     );
@@ -141,7 +143,7 @@ export async function GET(
 // Remove member from workspace
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -149,6 +151,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const { id } = await params;
     const { searchParams } = new URL(req.url);
     const userIdToRemove = searchParams.get("userId");
 
@@ -158,7 +161,7 @@ export async function DELETE(
 
     await connectDB();
 
-    const workspace = await Workspace.findById(params.id);
+    const workspace = await Workspace.findById(id);
     if (!workspace) {
       return NextResponse.json({ error: "Workspace not found" }, { status: 404 });
     }
